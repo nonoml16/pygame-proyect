@@ -1,4 +1,9 @@
+import random
+
 import pygame
+
+from bomb import *
+from diamond import *
 from ground import *
 from block import *
 from player import *
@@ -19,6 +24,36 @@ class Game:
         self.wall_spritesheet = Spritesheet('assets/wall_terrain.png')
 
     def createTilemap(self, map_object):
+        # Lista para almacenar las posiciones de los diamantes
+        diamond_positions = []
+        bomb_positions = []
+
+        # Generar 10 posiciones aleatorias para los diamantes
+        while len(diamond_positions) < 10:
+            x = random.randint(0, len(map_object.data[0]) - 1)
+            y = random.randint(0, len(map_object.data) - 1)
+
+            # Verificar si la posición está ocupada por un bloque
+            if map_object.get_tile_at(x, y) != 'B' and (x, y) not in diamond_positions:
+                diamond_positions.append((x, y))
+
+        # Crear diamantes en las posiciones válidas
+        for pos in diamond_positions:
+            Diamond(self, pos[0], pos[1])
+
+            # Generar 10 posiciones aleatorias para los diamantes
+            while len(bomb_positions) < 3:
+                x = random.randint(0, len(map_object.data[0]) - 1)
+                y = random.randint(0, len(map_object.data) - 1)
+
+                # Verificar si la posición está ocupada por un bloque
+                if map_object.get_tile_at(x, y) != 'B' and (x, y) not in bomb_positions:
+                    bomb_positions.append((x, y))
+
+            # Crear diamantes en las posiciones válidas
+            for pos in bomb_positions:
+                Bomb(self, pos[0], pos[1])
+
         for i, row in enumerate(map_object.data):
             for j, column in enumerate(row):
                 Ground(self, j, i)
