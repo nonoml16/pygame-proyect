@@ -4,6 +4,7 @@ from block import *
 from player import *
 from spritesheet import *
 from config import *
+from map import *
 
 class Game:
 
@@ -13,18 +14,19 @@ class Game:
         self.clock = pygame.time.Clock()
         self.running = True
 
-        self.character_spritesheet = Spritesheet('assets/player/BIRDSPRITESHEET.png')
+        self.character_spritesheet = Spritesheet('assets/player/player2.png')
         self.terrain_spritesheet = Spritesheet('assets/grass_terrain.png')
         self.wall_spritesheet = Spritesheet('assets/wall_terrain.png')
 
-    def createTilemap(self):
-        for i, row in enumerate(tilemap):
+    def createTilemap(self, map_object):
+        for i, row in enumerate(map_object.data):
             for j, column in enumerate(row):
                 Ground(self, j, i)
                 if column == "B":
                     Block(self, j, i)
                 if column == "P":
                     Player(self, j, i)
+
 
     def new(self):
 
@@ -35,7 +37,8 @@ class Game:
         self.enemies = pygame.sprite.LayeredUpdates()
         self.attacks = pygame.sprite.LayeredUpdates()
 
-        self.createTilemap()
+        map_object = Map('assets/map.txt')
+        self.createTilemap(map_object)
 
     def events(self):
         for event in pygame.event.get():
