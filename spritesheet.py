@@ -1,6 +1,7 @@
 import pygame
 from config import *
 
+
 class Spritesheet:
     def __init__(self, file):
         self.sheet = pygame.image.load(file).convert()

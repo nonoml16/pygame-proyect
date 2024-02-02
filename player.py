@@ -3,6 +3,7 @@ import math
 import pygame
 from config import *
 
+
 class Player(pygame.sprite.Sprite):
     def __init__(self, game, x, y):
         self.game = game
@@ -81,12 +82,12 @@ class Player(pygame.sprite.Sprite):
                          self.game.character_spritesheet.get_sprite(161, 0, self.width, self.height)]
 
         right_animations = [self.game.character_spritesheet.get_sprite(193, 0, self.width, self.height),
-                           self.game.character_spritesheet.get_sprite(225, 0, self.width, self.height),
-                           self.game.character_spritesheet.get_sprite(257, 0, self.width, self.height)]
+                            self.game.character_spritesheet.get_sprite(225, 0, self.width, self.height),
+                            self.game.character_spritesheet.get_sprite(257, 0, self.width, self.height)]
 
         left_animations = [self.game.character_spritesheet.get_sprite(289, 0, self.width, self.height),
-                            self.game.character_spritesheet.get_sprite(321, 0, self.width, self.height),
-                            self.game.character_spritesheet.get_sprite(353, 0, self.width, self.height)]
+                           self.game.character_spritesheet.get_sprite(321, 0, self.width, self.height),
+                           self.game.character_spritesheet.get_sprite(353, 0, self.width, self.height)]
 
         if self.facing == "down":
             if self.y_change == 0:
