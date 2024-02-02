@@ -117,7 +117,7 @@ class Player(pygame.sprite.Sprite):
 
         if self.facing == "left":
             if self.x_change == 0:
-                self.image = self.game.character_spritesheet.get_sprite(193, 0, self.width, self.height)
+                self.image = self.game.character_spritesheet.get_sprite(289, 0, self.width, self.height)
             else:
                 self.image = left_animations[math.floor(self.animation_loop)]
                 self.animation_loop += 0.1
