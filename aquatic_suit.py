@@ -2,11 +2,11 @@ import pygame
 from config import *
 
 
-class Block(pygame.sprite.Sprite):
+class AquaticSuit(pygame.sprite.Sprite):
     def __init__(self, game, x, y):
         self.game = game
-        self._layer = BLOCK_LAYER
-        self.groups = self.game.all_sprites, self.game.blocks
+        self._layer = ITEM_LAYER
+        self.groups = self.game.all_sprites
         pygame.sprite.Sprite.__init__(self, self.groups)
 
         self.x = x * TILESIZE
@@ -14,7 +14,9 @@ class Block(pygame.sprite.Sprite):
         self.width = TILESIZE
         self.height = TILESIZE
 
-        self.image = self.game.block_spritesheet.get_sprite(0, 0, self.width, self.height)
+        self.image = pygame.image.load('assets/aquatic_suit.png').convert_alpha()
+
+        self.image = pygame.transform.scale(self.image, (self.width, self.height))
 
         self.rect = self.image.get_rect()
         self.rect.x = self.x

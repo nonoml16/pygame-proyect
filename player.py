@@ -1,4 +1,5 @@
 import math
+import time
 
 import pygame
 from config import *
@@ -28,14 +29,25 @@ class Player(pygame.sprite.Sprite):
         self.rect.x = self.x
         self.rect.y = self.y
 
+        self.lives = 10
+        self.diamonds_inventory = 0
+        self.bombs_inventory = 0
+        self.aquatic_suit_inventory = False
+
     def update(self):
         self.movement()
         self.animate()
 
+        self.collide_diamond()
+
         self.rect.x += self.x_change
         self.collide_blocks('x')
+        self.collide_walls('x')
+        self.collide_water('x')
         self.rect.y += self.y_change
         self.collide_blocks('y')
+        self.collide_walls('y')
+        self.collide_water('y')
 
         self.x_change = 0
         self.y_change = 0
@@ -59,10 +71,16 @@ class Player(pygame.sprite.Sprite):
         if direction == "x":
             hits = pygame.sprite.spritecollide(self, self.game.blocks, False)
             if hits:
+                if self.lives <= 0:
+                    self.game.game_over()
+
                 if self.x_change > 0:
                     self.rect.x = hits[0].rect.left - self.rect.width
                 if self.x_change < 0:
                     self.rect.x = hits[0].rect.right
+                time.sleep(0.1)
+                self.lives -= 1
+                print('vidas =', self.lives)
 
         if direction == "y":
             hits = pygame.sprite.spritecollide(self, self.game.blocks, False)
@@ -71,6 +89,61 @@ class Player(pygame.sprite.Sprite):
                     self.rect.y = hits[0].rect.top - self.rect.width
                 if self.y_change < 0:
                     self.rect.y = hits[0].rect.bottom
+                time.sleep(0.1)
+                self.lives -= 1
+                print('vidas =', self.lives)
+            if self.lives == 0:
+                self.kill()
+                self.game.playing = False
+
+    def collide_walls(self, direction):
+        if direction == "x":
+            hits = pygame.sprite.spritecollide(self, self.game.walls, False)
+            if hits:
+                if self.x_change > 0:
+                    self.rect.x = hits[0].rect.left - self.rect.width
+                if self.x_change < 0:
+                    self.rect.x = hits[0].rect.right
+
+        if direction == "y":
+            hits = pygame.sprite.spritecollide(self, self.game.walls, False)
+            if hits:
+                if self.y_change > 0:
+                    self.rect.y = hits[0].rect.top - self.rect.width
+                if self.y_change < 0:
+                    self.rect.y = hits[0].rect.bottom
+        if self.lives == 0:
+            self.kill()
+            self.game.playing = False
+
+    def collide_water(self, direction):
+        if direction == "x":
+            hits = pygame.sprite.spritecollide(self, self.game.water, False)
+            if hits:
+                if self.x_change > 0:
+                    self.rect.x = hits[0].rect.left - self.rect.width
+                if self.x_change < 0:
+                    self.rect.x = hits[0].rect.right
+                time.sleep(0.1)
+                self.lives -= 1
+                print('vidas =', self.lives)
+
+        if direction == "y":
+            hits = pygame.sprite.spritecollide(self, self.game.water, False)
+            if hits:
+                if self.y_change > 0:
+                    self.rect.y = hits[0].rect.top - self.rect.width
+                if self.y_change < 0:
+                    self.rect.y = hits[0].rect.bottom
+                time.sleep(0.1)
+                self.lives -= 1
+                print('vidas =', self.lives)
+
+    def collide_diamond(self):
+        hits = pygame.sprite.spritecollide(self, self.game.diamond, True)
+        if hits:
+            self.diamonds_inventory += 1
+            print('Diamantes: ', self.diamonds_inventory)
 
     def animate(self):
         down_animations = [self.game.character_spritesheet.get_sprite(0, 0, self.width, self.height),
