@@ -1,4 +1,5 @@
 import math
+import random
 import time
 
 import pygame
@@ -58,6 +59,7 @@ class Player(pygame.sprite.Sprite):
         self.use_bomb()
         self.collide_aquatic_suit()
         self.wear_aquatic_suit()
+        self.collide_potion()
 
         self.x_change = 0
         self.y_change = 0
@@ -169,6 +171,16 @@ class Player(pygame.sprite.Sprite):
             self.aquatic_suit_inventory = True
             self.aquatic_suit_wearing = True
             print('Traje acuatico: ', self.aquatic_suit_inventory)
+
+    def collide_potion(self):
+        if self.lives < 10:
+            hits = pygame.sprite.spritecollide(self, self.game.potion, True)
+            if hits:
+                self.lives += random.randint(1, 5)
+                print('vidas ', self.lives)
+                if self.lives > 10:
+                    self.lives = 10
+                    print('vidas bucle ', self.lives)
 
     def animate(self):
         down_animations = [self.game.character_spritesheet.get_sprite(0, 0, self.width, self.height),

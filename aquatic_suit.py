@@ -14,7 +14,7 @@ class AquaticSuit(pygame.sprite.Sprite):
         self.width = TILESIZE
         self.height = TILESIZE
 
-        self.image = pygame.image.load('assets/aquatic_suit.png').convert_alpha()
+        self.image = pygame.image.load('assets/items/aquatic_suit.png').convert_alpha()
 
         self.image = pygame.transform.scale(self.image, (self.width, self.height))
 

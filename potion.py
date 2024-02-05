@@ -2,11 +2,11 @@ import pygame
 from config import *
 
 
-class Diamond(pygame.sprite.Sprite):
+class Potion(pygame.sprite.Sprite):
     def __init__(self, game, x, y):
         self.game = game
         self._layer = ITEM_LAYER
-        self.groups = self.game.all_sprites, self.game.diamond
+        self.groups = self.game.all_sprites, self.game.potion
         pygame.sprite.Sprite.__init__(self, self.groups)
 
         self.x = x * TILESIZE
@@ -14,10 +14,8 @@ class Diamond(pygame.sprite.Sprite):
         self.width = TILESIZE
         self.height = TILESIZE
 
-        # Cargar la imagen del diamante desde el archivo diamond.png en la carpeta assets
-        self.image = pygame.image.load('assets/items/diamond.png').convert_alpha()
+        self.image = pygame.image.load('assets/items/heath_potion.png').convert_alpha()
 
-        # Escalar la imagen al tamaño del mosaico
         self.image = pygame.transform.scale(self.image, (self.width, self.height))
 
         self.rect = self.image.get_rect()

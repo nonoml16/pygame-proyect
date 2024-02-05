@@ -14,7 +14,7 @@ class Bomb(pygame.sprite.Sprite):
         self.width = TILESIZE
         self.height = TILESIZE
 
-        self.image = pygame.image.load('assets/bomb.png').convert_alpha()
+        self.image = pygame.image.load('assets/items/bomb.png').convert_alpha()
 
         self.image = pygame.transform.scale(self.image, (self.width, self.height))
 
