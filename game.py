@@ -85,6 +85,8 @@ class Game:
         self.enemies = pygame.sprite.LayeredUpdates()
         self.attacks = pygame.sprite.LayeredUpdates()
         self.diamond = pygame.sprite.LayeredUpdates()
+        self.bomb = pygame.sprite.LayeredUpdates()
+        self.aquatic_suit = pygame.sprite.LayeredUpdates()
 
         map_object = Map('assets/map.txt')
         self.createTilemap(map_object)
